@@ -67,7 +67,7 @@ function createEntry(data, cb) {
 		return cb(new Error('400 improper data field'))
 	}
 
-	//data._id = "definition_" + data.name
+	data._id = "definition_" + data.name
 
 	db.post(data, function(err, res) {
 		if (err) cb(err)
