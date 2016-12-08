@@ -30,7 +30,7 @@ app.post('/owners', function(req, res, next) {
 });
 
 // READ
-app.get('/owners/:id/show', function(req, res, next) {
+app.get('/owners/:id', function(req, res, next) {
 	const ownerId = req.params.id
 	dal.getDocById(ownerId, function(err, data) {
 		if (err) {
@@ -61,7 +61,9 @@ app.put('/owners/:id', function(req, res, next) {
 //DELETE
 app.delete('/owners/:id', function(req, res, next) {
 	const ownerId = req.params.id
+	console.log('id', req.params.id)
 	dal.getDocById(ownerId, function(err, data) {
+		console.log('api', data)
 		if (err) {
 			var responseError = BuildResponseError(err)
 			return next(new Error(responseError.status, responseError.message, responseError))

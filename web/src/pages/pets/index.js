@@ -25,6 +25,7 @@ const Pets = React.createClass({
         <ul>
           {this.state.pets.map(li)}
         </ul>
+				<Link to="/">Home</Link>
       </div>
 		)
 	}

@@ -25,6 +25,7 @@ const Owners = React.createClass({
         <ul>
           {this.state.owners.map(li)}
         </ul>
+        <Link to="/">Home</Link>
       </div>
     )
   }

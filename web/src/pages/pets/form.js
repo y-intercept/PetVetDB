@@ -20,7 +20,8 @@ const PetForm = React.createClass({
   },
   handleSubmit(e) {
     e.preventDefault()
-    data.post('pets', this.state.pet).then(res => this.setState({resolved: true}))
+    data.post('pets', this.state.pet)
+    .then(res => this.setState({resolved: true}))
   },
   render() {
     return (

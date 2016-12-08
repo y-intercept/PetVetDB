@@ -9,6 +9,10 @@ const OwnerForm = React.createClass({
 			resolved: false
 		}
 	},
+	// componentDidMount() {
+	// 	data.get('owners', this.props.params.id)
+	// 		.then(owner => this.setState({ owner }))
+	// },
 	handleChange (field) {
 		return (e) => {
 			let owner = {...this.state.owner}
@@ -19,16 +23,24 @@ const OwnerForm = React.createClass({
 	handleSubmit (e) {
 		e.preventDefault()
 		data.post('owners', this.state.owner)
-			.then(res => this.setState({ resolved: true }))
+		.then(res => this.setState({ resolved: true }))
 	},
 	render() {
 		return (
 			<div>
 				<span>
-					{this.state.resolved ? <Redirect to="/owners" /> : null}
+					{this.state.resolved && this.state.owner._id ? <Redirect to={`/owners/${this.state.owner._id}`} /> : null}
+					{this.state.resolved && !this.state.owner._id ? <Redirect to="/owners" /> : null }
 				</span>
 				<p className="f3 ma3">New Owner</p>
 				<form onSubmit={this.handleSubmit} className="pa3">
+					<div>
+						<label className="f6 b db mb2">First Name</label>
+						<input className="input-reset ba b--black-20 pa2 mb2 db w-30"
+							value={this.state.owner.firstName}
+							onChange={this.handleChange('firstName')}
+							type="text" />
+					</div>
 					<div>
 						<label className="f6 b db mb2">Last Name</label>
     				<input className="input-reset ba b--black-20 pa2 mb2 db w-30"
@@ -36,13 +48,7 @@ const OwnerForm = React.createClass({
 							onChange={this.handleChange('lastName')}
 							type="text" />
 					</div>
-					<div>
-						<label className="f6 b db mb2">First Name</label>
-    				<input className="input-reset ba b--black-20 pa2 mb2 db w-30"
-							value={this.state.owner.firstName}
-							onChange={this.handleChange('firstName')}
-							type="text" />
-					</div>
+
 					<div>
 						<label className="f6 b db mb2">Address</label>
     				<input className="input-reset ba b--black-20 pa2 mb2 db w-30"
@@ -69,6 +75,13 @@ const OwnerForm = React.createClass({
     				<input className="input-reset ba b--black-20 pa2 mb2 db w-30"
 							value={this.state.owner.zip}
 							onChange={this.handleChange('zip')}
+							type="text" />
+					</div>
+					<div>
+						<label className="f6 b db mb2">Email</label>
+    				<input className="input-reset ba b--black-20 pa2 mb2 db w-30"
+							value={this.state.owner.email}
+							onChange={this.handleChange('email')}
 							type="text" />
 					</div>
 					<div>

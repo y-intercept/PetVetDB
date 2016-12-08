@@ -15,18 +15,39 @@ module.exports = function() {
       headers: {
         'content-type': 'application/json'
       }
-    })
-      .then(res => res.json())
+    }).then(res => res.json())
+  }
+
+  const put = function(model, id, doc) {
+    return fetch(`${url}/${model}/${id}`, {
+      method: 'put',
+      body: JSON.stringify(doc),
+      headers: {
+        'Content-type': 'application/json'
+      }
+    }).then(res => res.json())
   }
 
 	const get = function (model, id) {
-		return fetch(`${url}/${model}/${id}/show`)
+		return fetch(`${url}/${model}/${id}`)
 			.then(res => res.json())
 	}
+
+  const remove = function (model, id, doc) {
+    return fetch(`${url}/${model}/${id}`, {
+      method: "DELETE",
+      body: JSON.stringify(doc),
+      headers: {
+        'content-type': 'application/json'
+      }
+    }).then(res => res.json())
+  }
+
 
   return {
     list,
     post,
-		get
+		get,
+    remove
   }
 }

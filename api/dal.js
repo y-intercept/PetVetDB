@@ -113,6 +113,7 @@ function editEntry(data, cb) {
 };
 
 function deleteDoc(data, cb) {
+	console.log('dal', data)
 	if (data === undefined || data === null) {
 		return cb(new Error('404Missing Data'))
 	}

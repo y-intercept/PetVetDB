@@ -12,11 +12,18 @@ const ShowOwner = React.createClass ({
 	componentDidMount() {
 		data.get('owners', this.props.params.id)
 			.then(owner => this.setState({ owner }))
-			console.log(this.state)
+	},
+	handleRemove(e) {
+		e.preventDefault()
+		if (confirm('Are you sure?')) {
+		data.remove('owners', this.props.params.id, this.state.owner)
+			.then(res => this.setState({ removed: true}))
+		}
 	},
 	render() {
 		return (
 			<div>
+				{this.state.removed ? <Redirect to="/owners" /> : null}
 				<h2>Show Owner</h2>
 				<ul>
 					<li>{this.state.owner.lastName}</li>
@@ -27,7 +34,10 @@ const ShowOwner = React.createClass ({
 					<li>{this.state.owner.zip}</li>
 					<li>{this.state.owner.email}</li> */}
 				</ul>
-				<button>Delete</button>
+				<button onClick={this.handleRemove}>Delete</button>
+				<Link to="/owners">cancel</Link>
+				<Link to="/">Home</Link>
+
 			</div>
 		)
 	}
