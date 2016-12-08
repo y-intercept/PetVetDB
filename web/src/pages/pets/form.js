@@ -5,11 +5,13 @@ const {Redirect, Link} = require('react-router')
 const PetForm = React.createClass({
   getInitialState() {
     return {
-      pet: {
-        name: ""
-      },
+      pet: {},
       resolved: false
     }
+  },
+  componentDidMount() {
+    data.get('pets', this.props.params.id)
+    .then(pet => this.setState({ pet }))
   },
   handleChange(field) {
     return (e) => {
@@ -20,15 +22,19 @@ const PetForm = React.createClass({
   },
   handleSubmit(e) {
     e.preventDefault()
-    data.post('pets', this.state.pet)
-    .then(res => this.setState({resolved: true}))
+    if (!this.state.pet._id) {
+      data.post('pets', this.state.pet)
+      .then(res => this.setState({resolved: true}))
+    } else {
+      data.put('pets', this.state.pet._id, this.state.pet)
+      .then(res => this.setState({resolved: true}))
+    }
   },
   render() {
     return (
       <div>
-        {this.state.resolved
-          ? <Redirect to="/pets"/>
-          : null}
+        {this.state.resolved && this.state.pet._id ? <Redirect to={`/pets/${this.state.pet._id}/show`} /> : null}
+        {this.state.resolved && !this.state.pet._id ? <Redirect to="/pets" /> : null }
         <p className="f3 ma3">Add New Pet</p>
         <form onSubmit={this.handleSubmit} className="pa3">
           <div>

@@ -28,7 +28,7 @@ const App = React.createClass({
 
           <Match exactly pattern="/pets" component={Pets} />
           <Match pattern="/pets/new" component={PetForm} />
-          <Match pattern="/pets/:id" component={ShowPet} />
+          <Match pattern="/pets/:id/show" component={ShowPet} />
           <Match pattern="/pets/:id/edit" component={PetForm} />
 
         </div>

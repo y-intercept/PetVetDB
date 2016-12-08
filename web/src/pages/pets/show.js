@@ -32,6 +32,7 @@ const ShowPet = React.createClass ({
 					<li>{this.state.pet.name}</li>
 				</ul>
 				<button onClick={this.handleRemove}>Delete</button>
+				<button><Link to={`/pets/${this.state.pet._id}/edit`}>Edit</Link></button>
 				<Link to="/pets">cancel</Link>
 				<Link to="/">Home</Link>
 
