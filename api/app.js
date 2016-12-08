@@ -270,6 +270,92 @@ app.get('/glossary', function(req, res, next) {
 	})
 });
 
+//////////////////////////////////
+//////// CRUDL Procedures ////////
+//////////////////////////////////
+
+// CREATE
+app.post('/procedures', function(req, res, next) {
+	dal.createProcedure(req.body, function(err, data) {
+		if (err) {
+			var responseError = BuildResponseError(err)
+			return next(new HTTPError(responseError.status, responseError.message, responseError))
+		}
+		if (data) {
+			res.append('Content-type', 'application/json')
+			res.status(201).send(data)
+		}
+	})
+});
+
+// READ
+app.get('/procedures/:id', function(req, res, next) {
+	const procedureId = req.params.id
+	dal.getDocById(procedureId, function(err, data) {
+		if (err) {
+			var responseError = BuildResponseError(err)
+			return next(new HTTPError(responseError.status, responseError.message, responseError))
+		}
+		if (data) {
+			res.append('Content-type', 'application/json')
+			res.status(200).send(data)
+		}
+	})
+});
+
+// UPDATE
+app.put('/procedures/:id', function(req, res, next) {
+	dal.editEntry(req.body, function(err, data) {
+		if (err) {
+			var responseError = BuildResponseError(err)
+			return next(new HTTPError(responseError.status, responseError.message, responseError))
+		}
+		if (data) {
+			res.append('Content-type', 'application/json')
+			res.status(200).send(data)
+		}
+	})
+});
+
+//DELETE
+app.delete('/procedures/:id', function(req, res, next) {
+	const procedureId = req.params.id
+	dal.getDocById(procedureId, function(err, data) {
+		if (err) {
+			var responseError = BuildResponseError(err)
+			return next(new Error(responseError.status, responseError.message, responseError))
+		}
+		if (data) {
+			dal.deleteDoc(data, function(deleteErr, deleteData) {
+				if (deleteErr) {
+					var responseError = BuildResponseError(err)
+					return next(new Error(responseError.status, responseError.message, responseError))
+				}
+				if (deleteData) {
+					res.append('Content-type', 'application/json')
+					res.status(202).send(deleteData)
+				}
+			})
+		}
+	})
+});
+
+// LIST
+app.get('/procedures', function(req, res, next) {
+	dal.listProcedures(req.body, function(err, data) {
+		if (err) {
+			console.log('err: ', err)
+			var responseError = BuildResponseError(err)
+			return next(new HTTPError(responseError.status, responseError.message, responseError))
+	}
+		if (data) {
+			res.append('Content-type', 'application/json')
+			res.status(200).send(data)
+		}
+	})
+});
+
+
 ////////////////////////////
 //// BuildResponseError ////
 ////////////////////////////

@@ -6,12 +6,14 @@ const ShowOwner = React.createClass ({
 	getInitialState() {
 		return {
 			owner: {},
-			removed: false
+			removed: false,
+			error: false
 		}
 	},
 	componentDidMount() {
 		data.get('owners', this.props.params.id)
 			.then(owner => this.setState({ owner }))
+			.catch(err => this.setState({error: true}))
 	},
 	handleRemove(e) {
 		e.preventDefault()
@@ -23,6 +25,7 @@ const ShowOwner = React.createClass ({
 	render() {
 		return (
 			<div>
+				{this.state.error ? <Redirect to="/owners" /> : null}
 				{this.state.removed ? <Redirect to="/owners" /> : null}
 				<h2>Show Owner</h2>
 				<ul>

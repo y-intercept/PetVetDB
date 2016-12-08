@@ -1,6 +1,6 @@
 const PouchDB = require('pouchdb-http')
 PouchDB.plugin(require('pouchdb-mapreduce'));
-const db = new PouchDB('http://localhost:5984/petvet')
+const db = new PouchDB('https://gookoothablerldomptereav:ced720e29fd1ca2fce9f8637232c5c9e3436028b@y-intercept.cloudant.com/petvetdb')
 
 /////////////////////////////////////
 //////// exported functions /////////
@@ -16,7 +16,10 @@ const dal = {
 	createView: createView,
 	listOwners: listOwners,
 	listPets: listPets,
-	listGlossary: listGlossary
+	listGlossary: listGlossary,
+	createProcedure: createProcedure,
+	listProcedures: listProcedures
+
 }
 
 ////////////////////////////////
@@ -73,6 +76,23 @@ function createEntry(data, cb) {
 		if (err) cb(err)
 		if (res) return cb(null, res)
 		console.log('201: Definition Created')
+	})
+};
+
+function createProcedure(data, cb) {
+	if (data.hasOwnProperty('_id') === true) {
+		return cb(new Error('400 improper data field'))
+	}
+	if (data.hasOwnProperty('_rev') === true) {
+		return cb(new Error('400 improper data field'))
+	}
+
+	data._id = "procedure_" + data.name
+
+	db.post(data, function(err, res) {
+		if (err) cb(err)
+		if (res) return cb(null, res)
+		console.log('201: Procedure Created')
 	})
 };
 
@@ -166,6 +186,22 @@ function listGlossary(data, cb) {
 		include_docs: true,
 		startkey: 'definition_',
 		endkey: 'definition_\uffff',
+		attachments: true
+	}, function(err, res) {
+		if (err) {
+			return console.log(err)
+		}
+		if (res) {
+			return cb(null ,res)
+		}
+	})
+};
+
+function listProcedures(data, cb) {
+	db.allDocs({
+		include_docs: true,
+		startkey: 'procedure_',
+		endkey: 'procedure_\uffff',
 		attachments: true
 	}, function(err, res) {
 		if (err) {

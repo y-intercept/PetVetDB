@@ -11,7 +11,9 @@ const About = require('./pages/about')
 const Glossary = require('./pages/glossary/index')
 const GlossaryForm = require('./pages/glossary/form')
 const ShowGlossary = require('./pages/glossary/show')
-
+const Procedure = require('./pages/procedures/index')
+const ProcedureForm = require('./pages/procedures/form')
+// const ShowProcedure = require('./pages/procedures/show')
 
 const App = React.createClass({
   render() {
@@ -38,6 +40,11 @@ const App = React.createClass({
             <Match pattern="/glossary/new" component={GlossaryForm} />
             <Match pattern="/glossary/:id/show" component={ShowGlossary} />
             <Match pattern="/glossary/:id/edit" component={GlossaryForm} />
+
+            <Match exactly pattern="/procedures" component={Procedure} />
+            <Match pattern="/procedures/new" component={ProcedureForm} />
+            {/* <Match pattern="/procedures/:id/show" component={ShowProcedure} /> */}
+            <Match pattern="/procedures/:id/edit" component={ProcedureForm} />
           </div>
       </BrowserRouter>
     )

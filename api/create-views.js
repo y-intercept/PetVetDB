@@ -45,5 +45,5 @@ const petsByOwner = {
 	}
 };
 
-// dal.createView(listOwners) //[created]
+dal.createView(listOwners) //[created]
 dal.createView(listPets)

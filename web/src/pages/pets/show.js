@@ -8,12 +8,14 @@ const ShowPet = React.createClass ({
 			pet: {
 				name: ''
 			},
-			removed: false
+			removed: false,
+			error: false
 		}
 	},
 	componentDidMount() {
 		data.get('pets', this.props.params.id)
 			.then(pet => this.setState({ pet }))
+			.catch(err => this.setState({error: true}))
 	},
 	handleRemove(e) {
 		e.preventDefault()
@@ -26,6 +28,7 @@ const ShowPet = React.createClass ({
 		console.log(this.state.pet)
 		return (
 			<div>
+				{this.state.error ? <Redirect to="/pets" /> : null}
 				{this.state.removed ? <Redirect to="/pets" /> : null}
 				<h2>Show Pet</h2>
 				<ul>
