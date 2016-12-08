@@ -35,6 +35,7 @@ const ShowOwner = React.createClass ({
 					<li>{this.state.owner.email}</li> */}
 				</ul>
 				<button onClick={this.handleRemove}>Delete</button>
+				<button><Link to={`/owners/${this.state.owner._id}/edit`}>Edit</Link></button>
 				<Link to="/owners">cancel</Link>
 				<Link to="/">Home</Link>
 

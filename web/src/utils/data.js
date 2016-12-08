@@ -48,6 +48,7 @@ module.exports = function() {
     list,
     post,
 		get,
-    remove
+    remove,
+    put
   }
 }

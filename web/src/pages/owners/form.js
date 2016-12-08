@@ -1,6 +1,6 @@
 const React = require('react')
 const data = require('../../utils/data')()
-const { Redirect } = require('react-router')
+const { Redirect, Link } = require('react-router')
 
 const OwnerForm = React.createClass({
 	getInitialState() {
@@ -9,10 +9,10 @@ const OwnerForm = React.createClass({
 			resolved: false
 		}
 	},
-	// componentDidMount() {
-	// 	data.get('owners', this.props.params.id)
-	// 		.then(owner => this.setState({ owner }))
-	// },
+	componentDidMount() {
+		data.get('owners', this.props.params.id)
+			.then(owner => this.setState({ owner }))
+	},
 	handleChange (field) {
 		return (e) => {
 			let owner = {...this.state.owner}
@@ -22,14 +22,19 @@ const OwnerForm = React.createClass({
 	},
 	handleSubmit (e) {
 		e.preventDefault()
-		data.post('owners', this.state.owner)
-		.then(res => this.setState({ resolved: true }))
+		if (!this.state.owner._id) {
+			data.post('owners', this.state.owner)
+			.then(res => this.setState({ resolved: true }))
+		} else {
+			data.put('owners', this.state.owner._id, this.state.owner)
+			.then(res => this.setState({ resolved: true}))
+		}
 	},
 	render() {
 		return (
 			<div>
 				<span>
-					{this.state.resolved && this.state.owner._id ? <Redirect to={`/owners/${this.state.owner._id}`} /> : null}
+					{this.state.resolved && this.state.owner._id ? <Redirect to={`/owners/${this.state.owner._id}/show`} /> : null}
 					{this.state.resolved && !this.state.owner._id ? <Redirect to="/owners" /> : null }
 				</span>
 				<p className="f3 ma3">New Owner</p>
@@ -86,6 +91,7 @@ const OwnerForm = React.createClass({
 					</div>
 					<div>
 						<button>Submit</button>
+						<Link to="/owners">cancel</Link>
 					</div>
 				</form>
 			</div>
