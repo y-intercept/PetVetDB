@@ -30,8 +30,8 @@ const ExamForm = React.createClass({
       let exam = {...this.state.exam}
       let petID= {...this.state.pet.name}
       exam[field] = e.target.value
-      this.setState({ exam, {pet_id: petID} // this throws the error
-      })
+      this.setState({ exam, {pet_id: petID} })// this throws the error
+
     }
   },
   handleSubmit(e) {
