@@ -3,27 +3,27 @@ const data = require('../../utils/data')()
 const { Link } = require('react-router')
 const { pluck } = require('ramda')
 
-const Procedures = React.createClass({
+const Exams = React.createClass({
 	getInitialState() {
 		return {
-			procedures: []
+			exams: []
 		}
 	},
 	componentDidMount() {
-		data.list('procedures')
+		data.list('exams')
 			.then(obj => {
-				const procedures = pluck('doc', obj.rows)
-				this.setState({procedures})
+				const exams = pluck('doc', obj.rows)
+				this.setState({exams})
 			})
 	},
 	render () {
-		const li = procedure => <li key={procedure._id}><Link to={`/procedures/${procedure._id}/show`}>{procedure.name}</Link></li>
+		const li = exam => <li key={exam._id}><Link to={`/exams/${exam._id}/show`}>{exam.date}</Link></li>
 		return (
 			<div className="pa5">
-        <span className="f3">Procedures</span>
-        <Link to="/procedures/new">New Procedure</Link>
+        <span className="f3">Exams</span>
+        <Link to="/exams/new">New Exam</Link>
         <ul>
-          {this.state.procedures.map(li)}
+          {this.state.exams.map(li)}
         </ul>
 				<Link to="/">Home</Link>
       </div>
@@ -31,4 +31,4 @@ const Procedures = React.createClass({
 	}
 })
 
-module.exports = Procedures
+module.exports = Exams

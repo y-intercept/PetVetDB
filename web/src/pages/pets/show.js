@@ -16,6 +16,8 @@ const ShowPet = React.createClass ({
 		data.get('pets', this.props.params.id)
 			.then(pet => this.setState({ pet }))
 			.catch(err => this.setState({error: true}))
+		data.list('exams')
+			.then(exams => this.setState({exams}))
 	},
 	handleRemove(e) {
 		e.preventDefault()
@@ -25,7 +27,6 @@ const ShowPet = React.createClass ({
 		}
 	},
 	render() {
-		console.log(this.state.pet)
 		return (
 			<div>
 				{this.state.error ? <Redirect to="/pets" /> : null}
@@ -34,7 +35,9 @@ const ShowPet = React.createClass ({
 				<ul>
 					<li>{this.state.pet.name}</li>
 				</ul>
+				<pre>{JSON.stringify(this.state.pet, null, 4)}</pre>
 				<button onClick={this.handleRemove}>Delete</button>
+				<button><Link to={`/exams/new?pet_id=${this.state.pet._id}&name=${this.state.pet.name}`}>New Exam</Link></button>
 				<button><Link to={`/pets/${this.state.pet._id}/edit`}>Edit</Link></button>
 				<Link to="/pets">cancel</Link>
 				<Link to="/">Home</Link>

@@ -17,8 +17,8 @@ const dal = {
 	listOwners: listOwners,
 	listPets: listPets,
 	listGlossary: listGlossary,
-	createProcedure: createProcedure,
-	listProcedures: listProcedures
+	createExam: createExam,
+	listExams: listExams
 
 }
 
@@ -52,7 +52,7 @@ function createPet(pet, cb) {
 		return cb(new Error('400 improper data field'))
 	}
 
-	pet._id = "pet_" + pet.name + pet.dob
+	pet._id = "pet_" + pet.name + "_" + pet.owner_id
 	pet.type = "pet"
 
 	db.post(pet, function(err, res) {
@@ -79,7 +79,7 @@ function createEntry(data, cb) {
 	})
 };
 
-function createProcedure(data, cb) {
+function createExam(data, cb) {
 	if (data.hasOwnProperty('_id') === true) {
 		return cb(new Error('400 improper data field'))
 	}
@@ -87,12 +87,12 @@ function createProcedure(data, cb) {
 		return cb(new Error('400 improper data field'))
 	}
 
-	data._id = "procedure_" + data.name
+	data._id = "exam_" + data.name + "_" + new Date().toISOString()
 
 	db.post(data, function(err, res) {
 		if (err) cb(err)
 		if (res) return cb(null, res)
-		console.log('201: Procedure Created')
+		console.log('201: Exam Created')
 	})
 };
 
@@ -100,11 +100,11 @@ function createProcedure(data, cb) {
 /////////// base functions ////////////
 ///////////////////////////////////////
 
-function getDocById(ownerId, cb) {
-	if (typeof ownerId === "undefined" || ownerId === null) {
+function getDocById(id, cb) {
+	if (typeof id === "undefined" || id === null) {
 		return cb(new Error("400Missing data parameter"))
 	} else {
-		db.get(ownerId, function(err, res) {
+		db.get(id, function(err, res) {
 			if (err) {
 				console.log('err: ', err)
 				return cb(err)
@@ -197,11 +197,11 @@ function listGlossary(data, cb) {
 	})
 };
 
-function listProcedures(data, cb) {
+function listExams(data, cb) {
 	db.allDocs({
 		include_docs: true,
-		startkey: 'procedure_',
-		endkey: 'procedure_\uffff',
+		startkey: 'exam_',
+		endkey: 'exam_\uffff',
 		attachments: true
 	}, function(err, res) {
 		if (err) {

@@ -17,15 +17,15 @@ const Pets = React.createClass({
 			})
 	},
 	render () {
-		const li = pet => <li key={pet._id}><Link to={`/pets/${pet._id}/show`}>{pet.name}</Link></li>
+		const li = pet => <li key={pet._id}><Link to={`/pets/${pet._id}/show`}>{pet.name} / {pet.owner_id}</Link></li>
 		return (
 			<div className="pa5">
         <span className="f3">Pets</span>
-        <Link to="/pets/new">New Pet</Link>
         <ul>
           {this.state.pets.map(li)}
         </ul>
 				<Link to="/">Home</Link>
+				<Link className="ph2" to="/owners">Owners</Link>
       </div>
 		)
 	}

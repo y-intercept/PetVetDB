@@ -10,8 +10,10 @@ const OwnerForm = React.createClass({
 		}
 	},
 	componentDidMount() {
+		if (this.props.params.id) {
 		data.get('owners', this.props.params.id)
 			.then(owner => this.setState({ owner }))
+		}
 	},
 	handleChange (field) {
 		return (e) => {
@@ -33,10 +35,10 @@ const OwnerForm = React.createClass({
 	render() {
 		return (
 			<div>
-				<span>
+
 					{this.state.resolved && this.state.owner._id ? <Redirect to={`/owners/${this.state.owner._id}/show`} /> : null}
 					{this.state.resolved && !this.state.owner._id ? <Redirect to="/owners" /> : null }
-				</span>
+
 				<p className="f3 ma3">New Owner</p>
 				<form onSubmit={this.handleSubmit} className="pa3">
 					<div>

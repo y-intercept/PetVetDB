@@ -178,6 +178,7 @@ app.get('/pets', function(req, res, next) {
 			return next(new HTTPError(responseError.status, responseError.message, responseError))
 	}
 		if (data) {
+			console.log(data)
 			res.append('Content-type', 'application/json')
 			res.status(200).send(data)
 		}
@@ -271,12 +272,12 @@ app.get('/glossary', function(req, res, next) {
 });
 
 //////////////////////////////////
-//////// CRUDL Procedures ////////
+//////// CRUDL Exams ////////
 //////////////////////////////////
 
 // CREATE
-app.post('/procedures', function(req, res, next) {
-	dal.createProcedure(req.body, function(err, data) {
+app.post('/exams', function(req, res, next) {
+	dal.createExam(req.body, function(err, data) {
 		if (err) {
 			var responseError = BuildResponseError(err)
 			return next(new HTTPError(responseError.status, responseError.message, responseError))
@@ -289,9 +290,9 @@ app.post('/procedures', function(req, res, next) {
 });
 
 // READ
-app.get('/procedures/:id', function(req, res, next) {
-	const procedureId = req.params.id
-	dal.getDocById(procedureId, function(err, data) {
+app.get('/exams/:id', function(req, res, next) {
+	const examId = req.params.id
+	dal.getDocById(examId, function(err, data) {
 		if (err) {
 			var responseError = BuildResponseError(err)
 			return next(new HTTPError(responseError.status, responseError.message, responseError))
@@ -304,7 +305,7 @@ app.get('/procedures/:id', function(req, res, next) {
 });
 
 // UPDATE
-app.put('/procedures/:id', function(req, res, next) {
+app.put('/exams/:id', function(req, res, next) {
 	dal.editEntry(req.body, function(err, data) {
 		if (err) {
 			var responseError = BuildResponseError(err)
@@ -318,9 +319,9 @@ app.put('/procedures/:id', function(req, res, next) {
 });
 
 //DELETE
-app.delete('/procedures/:id', function(req, res, next) {
-	const procedureId = req.params.id
-	dal.getDocById(procedureId, function(err, data) {
+app.delete('/exams/:id', function(req, res, next) {
+	const examId = req.params.id
+	dal.getDocById(examId, function(err, data) {
 		if (err) {
 			var responseError = BuildResponseError(err)
 			return next(new Error(responseError.status, responseError.message, responseError))
@@ -341,8 +342,8 @@ app.delete('/procedures/:id', function(req, res, next) {
 });
 
 // LIST
-app.get('/procedures', function(req, res, next) {
-	dal.listProcedures(req.body, function(err, data) {
+app.get('/exams', function(req, res, next) {
+	dal.listExams(req.body, function(err, data) {
 		if (err) {
 			console.log('err: ', err)
 			var responseError = BuildResponseError(err)
