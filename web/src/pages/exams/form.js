@@ -24,6 +24,7 @@ const ExamForm = React.createClass({
      .then(pet => {
       const exam = {...this.state.exam}
       exam.pet = pet
+      exam.pet_id = pet._id
       this.setState({exam})
     })
   },
