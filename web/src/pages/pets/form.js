@@ -22,7 +22,7 @@ const PetForm = React.createClass({
       .then(owner => {
         const pet = {...this.state.pet}
         pet.owner_id = owner._id
-        pet.ownerName = owner.firstName, owner.lastName
+        pet.ownerName = owner.firstName + "_" + owner.lastName
         this.setState({ pet })
       })
   },

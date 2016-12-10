@@ -8,29 +8,30 @@ const { Redirect, Link } = require('react-router')
 const ExamForm = React.createClass({
   getInitialState() {
     return {
-      pet: {
-        _id: -1
-      },
       exam: {
         date: '',
-        pet_id: ""
+        pet: {}
+      },
+      pet: {
+        _id: -1
       },
       resolved: false,
 
     }
   },
   componentDidMount() {
-    // data.get('owners', this.props.)
-    data.get('pets', this.props.params._id)
-    .then(pet => this.setState({ pet }))
-
+    data.get('pets', this.props.location.query.pet_id)
+     .then(pet => {
+      const exam = {...this.state.exam}
+      exam.pet = pet
+      this.setState({exam})
+    })
   },
   handleChange(field) {
     return (e) => {
       let exam = {...this.state.exam}
-      let petID= {...this.state.pet.name}
       exam[field] = e.target.value
-      this.setState({ exam, {pet_id: petID} })// this throws the error
+      this.setState({ exam })
 
     }
   },
