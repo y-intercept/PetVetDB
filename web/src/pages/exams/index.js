@@ -17,14 +17,29 @@ const Exams = React.createClass({
 			})
 	},
 	render () {
-		const li = exam => <li key={exam._id}><Link to={`/exams/${exam._id}/show`}>{exam.date}</Link></li>
+		const li = exam =>
+			<tr key={exam._id}><Link to={`/exams/${exam._id}/show`}>
+				<td className="pa3">{exam.date}</td>
+				<td className="pa3">Fluffy</td>
+				<td className="pa3">John Lennon</td>
+			</Link></tr>
+
 		return (
 			<div className="pa5">
         <span className="f3">Exams</span>
         <Link to="/exams/new">New Exam</Link>
-        <ul>
-          {this.state.exams.map(li)}
-        </ul>
+        <table>
+					<tbody>
+						<tr>
+							<td>#</td>
+							<td>date</td>
+							<td>patient</td>
+							<td>owner</td>
+						</tr>
+          	{this.state.exams.map(li)}
+					</tbody>
+        </table>
+				<pre>{JSON.stringify(this.state.exams, null, 2)}</pre>
 				<Link to="/">Home</Link>
       </div>
 		)

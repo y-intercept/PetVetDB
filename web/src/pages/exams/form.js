@@ -1,25 +1,37 @@
 const React = require('react')
 const data = require('../../utils/data')()
-const {Redirect, Link} = require('react-router')
+const { Redirect, Link } = require('react-router')
+// var current = new Date()
+// const today = current.toISOString()
+
 
 const ExamForm = React.createClass({
   getInitialState() {
     return {
-      exam: {
-        name: ''
+      pet: {
+        _id: -1
       },
-      resolved: false
+      exam: {
+        date: '',
+        pet_id: ""
+      },
+      resolved: false,
+
     }
   },
   componentDidMount() {
-    data.get('exams', this.props.params.id)
-    .then(exam => this.setState({ exam }))
+    // data.get('owners', this.props.)
+    data.get('pets', this.props.params._id)
+    .then(pet => this.setState({ pet }))
+
   },
   handleChange(field) {
     return (e) => {
       let exam = {...this.state.exam}
+      let petID= {...this.state.pet.name}
       exam[field] = e.target.value
-      this.setState({exam})
+      this.setState({ exam, {pet_id: petID} // this throws the error
+      })
     }
   },
   handleSubmit(e) {
@@ -37,8 +49,16 @@ const ExamForm = React.createClass({
       <div>
         {this.state.resolved && this.state.exam._id ? <Redirect to={`/exams/${this.state.exam._id}/show`} /> : null}
         {this.state.resolved && !this.state.exam._id ? <Redirect to="/exams" /> : null }
-        <p className="f3 ma3">Exam Form</p>
+        <p className="f3 ma3 db">New Exam</p>
         <form onSubmit={this.handleSubmit} className="pa3">
+          <div>
+            <label className="f6 b db mb2">Date</label>
+            <input
+							className="input-reset ba b--black-20 pa2 mb2 db w-30"
+							value={this.state.exam.date}
+							onChange={this.handleChange('date')}
+							type="date"/>
+          </div>
           <div>
             <label className="f6 b db mb2">First Look</label>
             <input
