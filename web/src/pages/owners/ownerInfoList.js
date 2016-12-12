@@ -26,6 +26,10 @@ const OwnerInfoList = ({data}) => (
             <td>{data.state}</td>
           </tr>
           <tr>
+            <td>Zip Code:</td>
+            <td>{data.zip}</td>
+          </tr>
+          <tr>
             <td>Email:</td>
             <td>{data.email}</td>
           </tr>

@@ -33,7 +33,7 @@ const ShowOwner = React.createClass({
 				.then(res => this.setState({removed: true}))
     }
   },
-	
+
   render() {
 
     const petList = pets =>
@@ -61,7 +61,7 @@ const ShowOwner = React.createClass({
 							<ul>
 		          	{this.state.pets.map(petList)}
 		        	</ul>
-							<Button bsStyle="default"><Link to={`/pets/new?owner_id=${data._id}&name=${data.firstName}+${data.lastName}`}>Add Pet</Link></Button>
+							<Button bsStyle="default"><Link to={`/pets/new?owner_id=${this.state.owner._id}&name=${this.state.owner.firstName}+${this.state.owner.lastName}`}>Add Pet</Link></Button>
 						</Panel>
 						</Col>
 					</Row>

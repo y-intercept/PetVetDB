@@ -1,11 +1,22 @@
 const React = require('react')
 const data = require('../../utils/data')()
 const { Redirect, Link } = require('react-router')
+const FormInstance = require('./formComponent')
+
 
 const OwnerForm = React.createClass({
 	getInitialState() {
 		return {
-			owner: {},
+			owner: {
+				firstName: '',
+				lastName: '',
+				address: '',
+				city: '',
+				state: '',
+				zip: '',
+				email: '',
+				phone: ''
+			},
 			resolved: false
 		}
 	},
@@ -32,15 +43,21 @@ const OwnerForm = React.createClass({
 			.then(res => this.setState({ resolved: true}))
 		}
 	},
+
 	render() {
+
 		return (
 			<div>
 
 					{this.state.resolved && this.state.owner._id ? <Redirect to={`/owners/${this.state.owner._id}/show`} /> : null}
 					{this.state.resolved && !this.state.owner._id ? <Redirect to="/owners" /> : null }
 
-				<p className="f3 ma3">New Owner</p>
-				<form onSubmit={this.handleSubmit} className="pa3">
+				<p className="f3">New Owner</p>
+				<FormInstance data={this.state.owner} change={this.handleChange} submit={this.handleSubmit} />
+
+
+
+				{/* <form onSubmit={this.handleSubmit} className="pa3">
 					<div>
 						<label className="f6 b db mb2">First Name</label>
 						<input className="input-reset ba b--black-20 pa2 mb2 db w-30"
@@ -95,7 +112,7 @@ const OwnerForm = React.createClass({
 						<button>Submit</button>
 						<Link to="/owners">cancel</Link>
 					</div>
-				</form>
+				</form> */}
 			</div>
 		)
 	}
