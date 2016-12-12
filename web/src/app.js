@@ -2,6 +2,7 @@ const React = require('react')
 const { BrowserRouter, Match } = require('react-router')
 const dateformat = require('dateformat')
 const NavbarInstance = require('./components/navbar.js')
+const { Row, Grid, Col } = require('react-bootstrap')
 const now = new Date()
 const { Owners, OwnerForm, ShowOwner,
         Pets, PetForm, ShowPet, Home,
@@ -46,8 +47,17 @@ const MatchWithHeader = ({component: Component, ...rest}) =>
   <Match {...rest} render={props =>
     <div>
       <NavbarInstance />
-      <div className="fr pv0 ph2">Today's date: {dateformat(now, "mm/dd/yyyy")}</div>
-      <Component {...props} />
+      <Grid>
+        <Row className="show-grid">
+          <Col xs={12} md={12} className="pv0 pr5 i f4 fw2 fr">Today's date: {dateformat(now, "mm/dd/yyyy")}</Col>
+        </Row>
+        <Row className="show-grid">
+					<p> </p>
+					<Col xs={12} md={3} className="fl"><code>xxx</code></Col>
+					<Col xs={12} md={9}><Component {...props} /></Col>
+				</Row>
+			</Grid>
+
     </div>
   } />
 
