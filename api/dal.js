@@ -1,6 +1,8 @@
 const PouchDB = require('pouchdb-http')
 PouchDB.plugin(require('pouchdb-mapreduce'));
 const db = new PouchDB('https://gookoothablerldomptereav:ced720e29fd1ca2fce9f8637232c5c9e3436028b@y-intercept.cloudant.com/petvetdb')
+const dateformat = require('dateformat')
+var now = new Date()
 
 /////////////////////////////////////
 //////// exported functions /////////
@@ -86,8 +88,10 @@ function createExam(data, cb) {
 	if (data.hasOwnProperty('_rev') === true) {
 		return cb(new Error('400 improper data field'))
 	}
+	console.log('dal',now)
 
-	data._id = "exam_" + data.name + "_" + new Date().toISOString()
+	data._id = "exam_" + data.petName + "_" + dateformat(data.now, "mm-dd-yyyy-HH:MM")
+
 
 	db.post(data, function(err, res) {
 		if (err) cb(err)
