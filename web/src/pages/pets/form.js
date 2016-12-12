@@ -1,14 +1,20 @@
 const React = require('react')
 const data = require('../../utils/data')()
 const {Redirect, Link} = require('react-router')
+const FormInstance = require('./formComponent')
 
 const PetForm = React.createClass({
   getInitialState() {
     return {
       owner: {},
       pet: {
-        owner_id: '',
-        ownerName: ''
+        name: '',
+        species: '',
+        breed: '',
+        color: '',
+        markings: '',
+        sex: '',
+        dob: ''
       },
       resolved: false
     }
@@ -22,7 +28,8 @@ const PetForm = React.createClass({
       .then(owner => {
         const pet = {...this.state.pet}
         pet.owner_id = owner._id
-        pet.ownerName = owner.firstName + "_" + owner.lastName
+        pet.ownerFirstName = owner.firstName
+        pet.ownerLastName = owner.lastName
         this.setState({ pet })
       })
   },
@@ -44,14 +51,18 @@ const PetForm = React.createClass({
     }
   },
   render() {
+
+
+
     return (
       <div>
-        <div className="h-75 v-mid">
+        {/* <div className="h-75 v-mid ml4"> */}
         {this.state.resolved ? <Redirect to={`/owners/${this.state.pet.owner_id}/show`} /> : null}
         {/* {this.state.resolved && !this.state.pet._id ? <Redirect to="/pets" /> : null } */}
-        <p className="f3 ma3">Add New Pet</p>
-        <form onSubmit={this.handleSubmit} className="pa3">
-          <div>{this.state.pet.ownerName}</div>
+        <p className="f2 ma3">Add New Pet</p>
+        <FormInstance data={this.state.pet} change={this.handleChange} submit={this.handleSubmit}/>
+        {/* <form onSubmit={this.handleSubmit} className="pa3">
+          <div className="pb2">Owner: {this.state.pet.ownerName}</div>
           <div>
             <label className="f6 b db mb2">Name</label>
             <input
@@ -60,7 +71,7 @@ const PetForm = React.createClass({
 							onChange={this.handleChange('name')}
 							type="text"/>
           </div>
-          {/* <div>
+          <div>
             <label className="f6 b db mb2">Species</label>
             <input
 							className="input-reset ba b--black-20 pa2 mb2 db w-30"
@@ -99,7 +110,7 @@ const PetForm = React.createClass({
 							value={this.state.pet.sex}
 							onChange={this.handleChange('sex')}
 							type="text"/>
-          </div> */}
+          </div>
           <div>
             <label className="f6 b db mb2">DOB</label>
             <input
@@ -112,8 +123,8 @@ const PetForm = React.createClass({
             <button className="f6 link dim br2 ph3 pv2 mb2 dib black bg-light-gray">Submit</button>
             <Link to="/pets" className="db link ml1">cancel</Link>
           </div>
-        </form>
-      </div>
+        </form> */}
+      {/* </div> */}
       </div>
     )
   }
