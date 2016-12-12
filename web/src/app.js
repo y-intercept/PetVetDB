@@ -1,30 +1,19 @@
 const React = require('react')
 const { BrowserRouter, Match } = require('react-router')
-// const navbarInstance = require('./navbar.js')
-import NavbarInstance from './navbar.js'
-const Owners = require('./pages/owners/index')
-const OwnerForm = require('./pages/owners/form')
-const ShowOwner = require('./pages/owners/show')
-const Pets = require('./pages/pets/index')
-const PetForm = require('./pages/pets/form')
-const ShowPet = require('./pages/pets/show')
-const Home = require('./pages/home')
-const About = require('./pages/about')
-const Glossary = require('./pages/glossary/index')
-const GlossaryForm = require('./pages/glossary/form')
-const ShowGlossary = require('./pages/glossary/show')
-const Exam = require('./pages/exams/index')
-const ExamForm = require('./pages/exams/form')
-const ShowExam = require('./pages/exams/show')
+const dateformat = require('dateformat')
+const NavbarInstance = require('./components/navbar.js')
+const now = new Date()
+const { Owners, OwnerForm, ShowOwner,
+        Pets, PetForm, ShowPet, Home,
+        About, Glossary, GlossaryForm,
+        ShowGlossary, Exam, ExamForm,
+        ShowExam } = require('./pages')
 
 const App = React.createClass({
   render() {
     return (
       <BrowserRouter>
         <div className="avenir bg-light-gray h-100 w-100">
-          {/* <div className="bb b--light-silver mr3 ml3 mt3">
-            <span className="f2">Pet Vet DB</span>
-          </div> */}
             <MatchWithHeader exactly pattern="/" component={Home}/>
             <MatchWithHeader pattern="/about" component={About}/>
 
@@ -57,6 +46,7 @@ const MatchWithHeader = ({component: Component, ...rest}) =>
   <Match {...rest} render={props =>
     <div>
       <NavbarInstance />
+      <div className="fr pv0 ph2">Today's date: {dateformat(now, "mm/dd/yyyy")}</div>
       <Component {...props} />
     </div>
   } />

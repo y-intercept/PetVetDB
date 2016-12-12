@@ -2,6 +2,9 @@ const React = require('react')
 const {Link, Redirect} = require('react-router')
 const data = require('../../utils/data')()
 const {pluck, filter, compose, tap} = require('ramda')
+const { Row, Grid, Col, Panel, Button} = require('react-bootstrap')
+const PanelsInstance  = require('./showComponent')
+
 
 const ShowOwner = React.createClass({
   getInitialState() {
@@ -30,10 +33,14 @@ const ShowOwner = React.createClass({
 				.then(res => this.setState({removed: true}))
     }
   },
+	
   render() {
-    const petList = pets => <li key={pets._id}>
-      <Link to={`/pets/${pets._id}/show`}>{pets.name}</Link>
-    </li>
+
+    const petList = pets =>
+			<li key={pets._id} className="list f2 fw3">
+	      <Link to={`/pets/${pets._id}/show`}>{pets.name}</Link>
+	    </li>
+
     return (
       <div>
 
@@ -43,29 +50,22 @@ const ShowOwner = React.createClass({
         {this.state.removed
           ? <Redirect to="/owners"/>
           : null}
-        <h2>Show Owner</h2>
-        <ul className="link">
-          <li>{this.state.owner.lastName}</li>
-          <li>{this.state.owner.firstName}</li>
-          <li>{this.state.owner.address}</li>
-          <li>{this.state.owner.city}</li>
-          <li>{this.state.owner.state}</li>
-          <li>{this.state.owner.zip}</li>
-          <li>{this.state.owner.email}</li>
-        </ul>
-        <ul>
-          {this.state.pets.map(petList)}
-        </ul>
-        <button onClick={this.handleRemove}>Delete</button>
-        <button>
-          <Link to={`/pets/new?owner_id=${this.state.owner._id}&name=${this.state.owner.firstName}+${this.state.owner.lastName}`}>Add Pet</Link>
-        </button>
-        <button>
-          <Link to={`/owners/${this.state.owner._id}/edit`}>Edit</Link>
-        </button>
-        <Link to="/owners">cancel</Link>
-        <Link to="/">Home</Link>
 
+				<Grid>
+					<Row className="show-grid">
+						<Col xs={8} md={5}>
+							<PanelsInstance data={this.state.owner} onDelete={this.handleRemove} />
+						</Col>
+						<Col xs={8} md={2}>
+							<Panel header="Pets" className="mv4">
+							<ul>
+		          	{this.state.pets.map(petList)}
+		        	</ul>
+							<Button bsStyle="default"><Link to={`/pets/new?owner_id=${data._id}&name=${data.firstName}+${data.lastName}`}>Add Pet</Link></Button>
+						</Panel>
+						</Col>
+					</Row>
+				</Grid>
       </div>
     )
   }
