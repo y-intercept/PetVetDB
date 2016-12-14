@@ -1,7 +1,8 @@
 const React = require('react')
 const data = require('../../utils/data')()
-const {Redirect, Link} = require('react-router')
+const { Redirect } = require('react-router')
 const FormInstance = require('./formComponent')
+const { Grid, Row, Col } = require('react-bootstrap')
 
 const PetForm = React.createClass({
   getInitialState() {
@@ -42,6 +43,9 @@ const PetForm = React.createClass({
   },
   handleSubmit(e) {
     e.preventDefault()
+    if (e.charCode || e.keyCode === 13) {
+      this.setState({resolved: false})
+		}
     if (!this.state.pet._id) {
       data.post('pets', this.state.pet)
       .then(res => this.setState({resolved: true}))
@@ -52,79 +56,24 @@ const PetForm = React.createClass({
   },
   render() {
 
-
+    const formState = this.state.pet._id ? 'Edit' : 'New'
 
     return (
-      <div>
-        {/* <div className="h-75 v-mid ml4"> */}
-        {this.state.resolved ? <Redirect to={`/owners/${this.state.pet.owner_id}/show`} /> : null}
-        {/* {this.state.resolved && !this.state.pet._id ? <Redirect to="/pets" /> : null } */}
-        <p className="f2 ma3">Add New Pet</p>
-        <FormInstance data={this.state.pet} change={this.handleChange} submit={this.handleSubmit}/>
-        {/* <form onSubmit={this.handleSubmit} className="pa3">
-          <div className="pb2">Owner: {this.state.pet.ownerName}</div>
-          <div>
-            <label className="f6 b db mb2">Name</label>
-            <input
-							className="input-reset ba b--black-20 pa2 mb2 db w-30"
-							value={this.state.pet.name}
-							onChange={this.handleChange('name')}
-							type="text"/>
-          </div>
-          <div>
-            <label className="f6 b db mb2">Species</label>
-            <input
-							className="input-reset ba b--black-20 pa2 mb2 db w-30"
-							value={this.state.pet.species}
-							onChange={this.handleChange('species')}
-							type="text"/>
-          </div>
-          <div>
-            <label className="f6 b db mb2">Breed</label>
-            <input
-							className="input-reset ba b--black-20 pa2 mb2 db w-30"
-							value={this.state.pet.breed}
-							onChange={this.handleChange('breed')}
-							type="text"/>
-          </div>
-          <div>
-            <label className="f6 b db mb2">Color</label>
-            <input
-							className="input-reset ba b--black-20 pa2 mb2 db w-30"
-							value={this.state.pet.color}
-							onChange={this.handleChange('color')}
-							type="text"/>
-          </div>
-          <div>
-            <label className="f6 b db mb2">Markings</label>
-            <input
-							className="input-reset ba b--black-20 pa2 mb2 db w-30"
-							value={this.state.pet.markings}
-							onChange={this.handleChange('markings')}
-							type="text"/>
-          </div>
-          <div>
-            <label className="f6 b db mb2">Sex</label>
-            <input
-							className="input-reset ba b--black-20 pa2 mb2 db w-30"
-							value={this.state.pet.sex}
-							onChange={this.handleChange('sex')}
-							type="text"/>
-          </div>
-          <div>
-            <label className="f6 b db mb2">DOB</label>
-            <input
-							className="input-reset ba b--black-20 pa2 mb2 db w-30"
-							value={this.state.pet.dob}
-							onChange={this.handleChange('dob')}
-							type="date"/>
-          </div>
-          <div>
-            <button className="f6 link dim br2 ph3 pv2 mb2 dib black bg-light-gray">Submit</button>
-            <Link to="/pets" className="db link ml1">cancel</Link>
-          </div>
-        </form> */}
-      {/* </div> */}
+      <div className="mt4">
+        {this.state.resolved && this.state.pet._id ? <Redirect to={`/owners/${this.state.pet.owner_id}/show`} /> : null}
+        {this.state.resolved && !this.state.pet._id ? <Redirect to="/pets" /> : null }
+        <Grid>
+          <Row>
+            <Col xs={12} md={4}></Col>
+            <Col xs={12} md={4}>
+              <p className="f2">
+                {formState} pet for {this.state.pet.ownerFirstName + " " + this.state.pet.ownerLastName}
+              </p>
+              <FormInstance data={this.state.pet} change={this.handleChange} submit={this.handleSubmit}/>
+            </Col>
+            <Col xs={12} md={4}></Col>
+          </Row>
+        </Grid>
       </div>
     )
   }

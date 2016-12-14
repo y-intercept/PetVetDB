@@ -1,6 +1,6 @@
 const React = require('react')
 const { Button, FormGroup, ControlLabel, FormControl } = require('react-bootstrap')
-
+const { Link } = require('react-router')
 
 
 function FieldGroup({ id, label, ...props }) {
@@ -53,13 +53,15 @@ const FormInstance = ({data, submit, change}) => (
 			id="sex"
 			label="Sex"
 			type="text"
+			maxLength="1"
 			value={data.sex}
 			onChange={change('sex')}
 		/>
 		<FieldGroup
 			id="DOB"
 			label="DOB"
-			type="text"
+			type="date"
+			maxLength="10"
 			value={data.dob}
 			onChange={change('dob')}
 		/>
@@ -67,6 +69,7 @@ const FormInstance = ({data, submit, change}) => (
 		<Button type="submit">
 			Submit
 		</Button>
+		<Link to={`/owners/${data.owner_id}/show`} className="ml2">Cancel</Link>
 	</form>
 )
 

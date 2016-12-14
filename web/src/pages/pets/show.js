@@ -4,9 +4,7 @@ const data = require('../../utils/data')()
 const { pluck, filter, compose } = require('ramda')
 const dateformat = require('dateformat')
 const PanelsInstance = require('./showComponent')
-const { Grid, Col, Row, Panel } = require('react-bootstrap')
-// const GridInstance = require('../../components/grid.js')
-
+const { Grid, Col, Row, Panel, Image } = require('react-bootstrap')
 
 const ShowPet = React.createClass({
   getInitialState() {
@@ -36,59 +34,42 @@ const ShowPet = React.createClass({
     }
   },
 
-
 render() {
 
-  const petList = pets =>
-    <li key={pets._id} className="list f2 fw3">
-      <Link to={`/pets/${pets._id}/show`}>{pets.name}</Link>
-    </li>
+  const examList = exam => <li key={exam._id} className="list f3 fw3">
+                              <Link to={`/exams/${exam._id}/show`}>{dateformat(exam.date, "mm/dd/yyyy")}</Link>
+                           </li>
 
-const examList = exam => <li key={exam._id}>{dateformat(exam.date, "mm/dd/yyyy")}</li>
+  return (
+    <div className="mv5">
 
-    return (
-      <div>
-        {this.state.error
-          ? <Redirect to="/pets"/>
-          : null}
-        {this.state.removed
-          ? <Redirect to="/pets"/>
-          : null}
-					{/* <Container> */}
-					{/* <GridInstance data={this.state.pet} /> */}
-					<Grid>
-						<Row className="show-grid">
-							<Col xs={8} md={5}>
-								<PanelsInstance data={this.state.pet} onDelete={this.handleRemove} />
-							</Col>
-							<Col xs={8} md={2}>
-								<Panel header="Siblings" className="mv4">
-								  <p>placeholder text</p>
-								{/* <Button bsStyle="default"><Link to={`/pets/new?owner_id=${this.state.pet._id}&name=${this.state.pet.firstName}+${this.state.pet.lastName}`}>Add Pet</Link></Button> */}
-							  </Panel>
-							</Col>
-						</Row>
-					</Grid>
+      {this.state.error
+        ? <Redirect to="/pets"/>
+        : null}
+      {this.state.removed
+        ? <Redirect to="/pets"/>
+        : null}
 
-				{/* <h2>Show Pet</h2>
-        <ul>
-          <li>{this.state.pet.name}</li>
-          <li>{this.state.exams.map(examList)}</li>
-        </ul>
-        <pre>{JSON.stringify(this.state.pet, null, 4)}</pre>
-        <button onClick={this.handleRemove}>Delete</button>
-        <button>
-          <Link to={`/exams/new?pet_id=${this.state.pet._id}&name=${this.state.pet.name}`}>New Exam</Link>
-        </button>
-        <button>
-          <Link to={`/pets/${this.state.pet._id}/edit`}>Edit</Link>
-        </button>
-        <Link to="/pets">cancel</Link>
-        <Link to="/">Home</Link> */}
-
-      </div>
-    )
-  }
+      <Grid>
+        <Row className="show-grid">
+          <Col xs={12} md={3}></Col>
+          <Col xs={12} md={4}>
+            <PanelsInstance data={this.state} onDelete={this.handleRemove}/>
+          </Col>
+          <Col xs={12} md={2} >
+            <Panel header={this.state.pet.name} className="mv2 fl">
+  						<Image className="v-mid" src={this.state.pet.pic} alt=":(" circle />
+  			    </Panel>
+            <Panel header="Past Exams" className="fl cf ml4 mt2">
+              {this.state.exams.map(examList)}
+            </Panel>
+          </Col>
+          <Col xs={6} md={3}></Col>
+        </Row>
+      </Grid>
+    </div>
+  )
+}
 })
 
 module.exports = ShowPet

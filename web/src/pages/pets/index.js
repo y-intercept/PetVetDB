@@ -2,6 +2,7 @@ const React = require('react')
 const data = require('../../utils/data')()
 const { Link } = require('react-router')
 const { pluck } = require('ramda')
+const { Panel, Image, Grid, Row, Col  } = require('react-bootstrap')
 
 const Pets = React.createClass({
 	getInitialState() {
@@ -17,16 +18,27 @@ const Pets = React.createClass({
 			})
 	},
 	render () {
-		const li = pet => <li key={pet._id}><Link to={`/pets/${pet._id}/show`}>{pet.name} / {pet.owner_id}</Link></li>
+
+		const PanelsInstance = pet => (
+				<Col xs={6} md={2} key={pet._id}>
+					<Panel header={pet.name}>
+						<Link to={`/pets/${pet._id}/show`}><Image className="panel-image" src={pet.pic} circle /></Link>
+			    </Panel>
+				</Col>
+			);
+
 		return (
 			<div className="pa5">
-        <span className="f3">Pets</span>
-        <ul>
-          {this.state.pets.map(li)}
-        </ul>
-				<Link to="/">Home</Link>
-				<Link className="ph2" to="/owners">Owners</Link>
-      </div>
+				<div className="f2 tc mv4">Pets</div>
+	        <Grid>
+						<Row>
+							<Col xs={12} md={2}>
+							</Col>
+	          	{this.state.pets.map(PanelsInstance)}
+							<Col xs={12} md={2}></Col>
+						</Row>
+	        </Grid>
+	  	</div>
 		)
 	}
 })
