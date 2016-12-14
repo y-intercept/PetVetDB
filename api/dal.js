@@ -90,7 +90,7 @@ function createExam(data, cb) {
 	}
 	console.log('dal',now)
 
-	data._id = "exam_" + data.petName + "_" + dateformat(data.now, "mm-dd-yyyy-HH:MM")
+	data._id = "exam_" + data.pet.name + "_" + dateformat(data.now, "mm-dd-yyyy-HH:MM")
 
 
 	db.post(data, function(err, res) {
