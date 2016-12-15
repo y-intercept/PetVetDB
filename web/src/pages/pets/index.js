@@ -1,7 +1,7 @@
 const React = require('react')
 const data = require('../../utils/data')()
 const { Link } = require('react-router')
-const { pluck } = require('ramda')
+const { pluck, splitEvery } = require('ramda')
 const { Panel, Image, Grid, Row, Col  } = require('react-bootstrap')
 
 const Pets = React.createClass({
@@ -26,17 +26,25 @@ const Pets = React.createClass({
 			    </Panel>
 				</Col>
 			);
+		const wrapper = item => (
+			<Row>
+				<Col xs={12} md={2}></Col>
+				{item}
+				<Col xs={12} md={2}></Col>
+			</Row>
+		)
+
+		const rows = item => {
+			return item.map(PanelsInstance)
+		}
+
+		const newPets = splitEvery(4,this.state.pets).map(rows).map(wrapper)
 
 		return (
 			<div className="pa5">
 				<div className="f2 tc mv4">Pets</div>
 	        <Grid>
-						<Row>
-							<Col xs={12} md={2}>
-							</Col>
-	          	{this.state.pets.map(PanelsInstance)}
-							<Col xs={12} md={2}></Col>
-						</Row>
+						{newPets}
 	        </Grid>
 	  	</div>
 		)
