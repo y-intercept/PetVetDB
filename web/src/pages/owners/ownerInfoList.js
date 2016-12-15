@@ -1,7 +1,6 @@
 const React = require('react')
 const { Table } = require('react-bootstrap')
 
-
 const OwnerInfoList = ({data}) => (
       <Table responsive>
         <tbody>
@@ -14,7 +13,7 @@ const OwnerInfoList = ({data}) => (
             <td>{data.lastName}</td>
           </tr>
           <tr>
-            <td>Addres:</td>
+            <td>Address:</td>
             <td>{data.address}</td>
           </tr>
           <tr>
@@ -32,6 +31,10 @@ const OwnerInfoList = ({data}) => (
           <tr>
             <td>Email:</td>
             <td>{data.email}</td>
+          </tr>
+          <tr>
+            <td>Phone Number:</td>
+            <td>{data.phone}</td>
           </tr>
         </tbody>
       </Table>

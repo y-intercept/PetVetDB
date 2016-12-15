@@ -44,12 +44,14 @@ const { Button, FormGroup, ControlLabel, FormControl } = require('react-bootstra
 					id="state"
 					type="text"
 					label="State"
+					maxLength="2"
 					value={data.state}
 					onChange={change('state')}
 				/>
 				<FieldGroup
 					id="zip"
 					type="text"
+					maxLength="5"
 					label="Zip Code"
 					value={data.zip}
 					onChange={change('zip')}
@@ -65,10 +67,10 @@ const { Button, FormGroup, ControlLabel, FormControl } = require('react-bootstra
 					id="phone"
 					type="text"
 					label="Phone Number"
+					maxLength="12"
 					value={data.phone}
 					onChange={change('phone')}
 				/>
-
 				<Button type="submit">
 					Submit
 				</Button>

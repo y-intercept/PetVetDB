@@ -1,7 +1,7 @@
 const React = require('react')
 const {Link, Redirect} = require('react-router')
 const data = require('../../utils/data')()
-const {pluck, filter, compose, tap} = require('ramda')
+const {pluck, filter, compose } = require('ramda')
 const { Row, Grid, Col, Panel, Button} = require('react-bootstrap')
 const PanelsInstance  = require('./showComponent')
 
@@ -24,7 +24,7 @@ const ShowOwner = React.createClass({
 				filter(item => item.owner_id === this.state.owner._id),
 				pluck('doc')
 			)(obj.rows))
-			.then(pets => this.setState({pets}))
+			.then(pets => this.setState({ pets }))
   },
   handleRemove(e) {
     e.preventDefault()
@@ -34,39 +34,41 @@ const ShowOwner = React.createClass({
     }
   },
 
-  render() {
+render() {
 
-    const petList = pets =>
-			<li key={pets._id} className="list f2 fw3">
-	      <Link to={`/pets/${pets._id}/show`}>{pets.name}</Link>
-	    </li>
+  const petList = list =>
+    <li key={list._id} className="list f3 fw3">
+      <Link to={`/pets/${list._id}/show`}>{list.name}</Link>
+    </li>
 
-    return (
-      <div>
+  return (
+    <div className="mv6">
 
-        {this.state.error
-          ? <Redirect to="/owners"/>
-          : null}
-        {this.state.removed
-          ? <Redirect to="/owners"/>
-          : null}
+      {this.state.error
+        ? <Redirect to="/owners"/>
+        : null}
+      {this.state.removed
+        ? <Redirect to="/owners"/>
+        : null}
 
-				<Grid>
-					<Row className="show-grid">
-						<Col xs={8} md={5}>
-							<PanelsInstance data={this.state.owner} onDelete={this.handleRemove} />
-						</Col>
-						<Col xs={8} md={2}>
-							<Panel header="Pets" className="mv4">
-							<ul>
-		          	{this.state.pets.map(petList)}
-		        	</ul>
-							<Button bsStyle="default"><Link to={`/pets/new?owner_id=${this.state.owner._id}&name=${this.state.owner.firstName}+${this.state.owner.lastName}`}>Add Pet</Link></Button>
-						</Panel>
-						</Col>
-					</Row>
-				</Grid>
-      </div>
+      <Grid>
+        <Row>
+          <Col xs={12} md={3}></Col>
+          <Col xs={12} md={4}>
+            <PanelsInstance data={this.state.owner} onDelete={this.handleRemove}/>
+          </Col>
+          <Col xs={12} md={2}>
+            <Panel header="Pets" className="list f3 fw3 mv4">
+              {this.state.pets.map(petList)}
+              <Button bsStyle="default" className="mt2">
+                <Link to={`/pets/new?owner_id=${this.state.owner._id}&name=${this.state.owner.firstName}+${this.state.owner.lastName}`}>Add Pet</Link>
+              </Button>
+            </Panel>
+          </Col>
+          <Col xs={12} md={3}></Col>
+        </Row>
+      </Grid>
+    </div>
     )
   }
 })
