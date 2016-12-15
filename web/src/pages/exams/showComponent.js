@@ -4,8 +4,6 @@ const ExamInfoTable = require('./examInfoTable.js')
 const {Link} = require('react-router')
 
 const PanelsInstance = (props) => {
-  console.log('props', props)
-
   let header = <div className="pv0 mv0">
     <p className="pv0 mv0">
       <Link to={`/pets/${props.data.exam.pet_id}/show`}>{props.data.exam.petName}</Link><span className="fr">Exam Date: {props.data.exam.date}</span>

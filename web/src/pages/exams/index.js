@@ -39,7 +39,7 @@ const Exams = React.createClass({
           <Row>
             <Col xs={12} md={2}></Col>
             <Col xs={12} md={8}>
-              <div className="f3 mv4 bg-light-gray pa4 br3 cf">Exam Log
+              <div className="f3 mv5 bg-light-gray pa4 br3 cf">Exam Log
                 <Table responsive>
                   <thead>
                     <tr>
