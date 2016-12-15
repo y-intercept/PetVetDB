@@ -56,6 +56,7 @@ function createPet(pet, cb) {
 
 	pet._id = "pet_" + pet.name + "_" + pet.owner_id
 	pet.type = "pet"
+	pet.pic = "https://smartofficesandsmarthomes.com/wp-content/plugins/loading-page/images/placeholder-image.jpg"
 
 	db.post(pet, function(err, res) {
 		if (err) cb(err)

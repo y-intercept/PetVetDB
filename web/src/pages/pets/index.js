@@ -20,16 +20,16 @@ const Pets = React.createClass({
 	render () {
 
 		const PanelsInstance = pet => (
-				<Col xs={6} md={2} key={pet._id}>
-					<Panel header={pet.name}>
-						<Link to={`/pets/${pet._id}/show`}><Image className="panel-image" src={pet.pic} circle /></Link>
+				<Col xs={6} md={2}>
+					<Panel header={pet.name} >
+						<Link to={`/pets/${pet._id}/show`}><Image className="img-responsive" src={pet.pic} circle /></Link>
 			    </Panel>
 				</Col>
 			);
 		const wrapper = item => (
-			<Row>
+			<Row key={item._id}>
 				<Col xs={12} md={2}></Col>
-				{item}
+					{item}
 				<Col xs={12} md={2}></Col>
 			</Row>
 		)
@@ -38,7 +38,7 @@ const Pets = React.createClass({
 			return item.map(PanelsInstance)
 		}
 
-		const newPets = splitEvery(4,this.state.pets).map(rows).map(wrapper)
+		const newPets = splitEvery(4, this.state.pets).map(rows).map(wrapper)
 
 		return (
 			<div className="pa5">

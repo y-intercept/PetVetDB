@@ -33,3 +33,21 @@ nav {
   display: block;
   margin: 0 auto;
 }
+
+img {
+  /*height: 80%;
+  width: 80%;*/
+  vertical-align: middle;
+}
+
+panel {
+  height:
+}
+
+.modal-container {
+  position: relative;
+ }
+ 
+ .modal-container .modal, .modal-container .modal-backdrop {
+   position: absolute;
+ }
